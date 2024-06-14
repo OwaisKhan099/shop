@@ -1,0 +1,47 @@
+models:
+
+Learn different concepts from here:
+https://docs.djangoproject.com/en/4.2/topics/db/models/
+
+Steps:
+1 - Adding rest_framework in installed app.
+
+2 - Creation of application within api directory:
+        django-admin startapp appname
+
+3 - registration of app in the installed app.
+
+4 - Viewsets and views:
+
+    Create view model in views.py which will be redirected or routed from urls. Use viewsets for this.
+
+    https://www.django-rest-framework.org/api-guide/viewsets/#modelviewset
+
+    from rest_framework import viewsets
+    # Create your views here.
+
+    class CategoryView(viewsets.ModelViewSet):
+        queryset = Category.objects.all()  #.order_by('name')
+        serializer_class = CategorySerializer
+
+5 - model creation and registration.
+    Create a model and register it in admin.py with admin.site.register(mode-lname)
+
+6 - serializer creation.
+    This is how, Category model is being serialized. In class Meta, model and required fields are mentioned.
+    Fields name should be same to the model members or columns names defined in models.
+    from rest_framework import serializers
+    class CategorySerializer(serializers.HyperlinkedModelSerializer):
+        class Meta:
+            model = Category
+            fields = ('name','description')
+
+6 - url inclusion and router:
+    This is how routers is added. You can also see the file. Moreover, routers from rest_framework is used for this.
+        from rest_framework import routers
+        router = routers.DefaultRouter()
+        router.register(r"", views.CategoryView)
+        urlpatterns = [
+            path('', include(router.urls))
+        ]
+
