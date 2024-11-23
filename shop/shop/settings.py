@@ -25,23 +25,30 @@ SECRET_KEY = 'django-insecure-+jp&k%lk3s@*3k8jj@n!+=o*3@z)55-*u3c)@4k#pubfiozq%s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["http://localhost:3000/","127.0.0.1"]
+
+# ALLOWED_HOSTS = ["http://localhost:3000/"]
+# ALLOWED_HOSTS = ["127"]
+
+# Access-Control-Allow-Origin= "*"
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+   'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'api',
     'api.category',
-    'api.products'
-    #'api.users'
+    'api.products',
+    'api.users',
+    'api.orders',
+    'rest_framework',
+    'rest_framework.authtoken'
 
 ]
 
@@ -124,7 +131,20 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+print(BASE_DIR)
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+##########################################################################################################
+#Extra added field for rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+AUTH_USER_MODEL =  'users.CustomUser'
